@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import buildingJson from "./utils/data/building.geojson";
-import * as d3 from "d3";
 
 const MapContainer = styled.div`
   display: flex;
@@ -16,8 +15,7 @@ mapboxgl.accessToken =
 
 function App() {
   const mapContainerRef = useRef(null);
-  const [map, setMap] = useState(null);
-  const [attr, setAttr] = useState("distance_from_station(ft)");
+  const [, setMap] = useState(null);
 
   useEffect(() => {
     const currentMap = new mapboxgl.Map({
