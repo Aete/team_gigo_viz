@@ -4,6 +4,10 @@ import styled from "styled-components";
 
 import buildingJson from "./utils/data/building.geojson";
 
+import Panel from "./Panel";
+import Popover from './Popover';
+
+
 const MapContainer = styled.div`
   display: flex;
   width: 100vw;
@@ -16,6 +20,8 @@ mapboxgl.accessToken =
 function App() {
   const mapContainerRef = useRef(null);
   const [, setMap] = useState(null);
+  const [popoverInfo, setPopoverInfo] = useState(null);
+  const [highlightedBuildingId, setHighlightedBuildingId] = useState(null);
 
   useEffect(() => {
     const currentMap = new mapboxgl.Map({
@@ -56,17 +62,46 @@ function App() {
           "fill-opacity": 0.3,
         },
       });
+
     });
 
-    currentMap.on("click", "building_json", function (e) {
+
+    currentMap.on('click', 'building_json', function (e) {
       console.log(e.features[0].properties);
+
+      const properties = e.features[0].properties;
+      const coordinates = e.features[0].geometry.coordinates[0][0];
+      const popoverX = e.originalEvent.clientX;
+      const popoverY = e.originalEvent.clientY;
+
+      console.log(coordinates)
+    
+      setPopoverInfo({
+        x: popoverX - 125,
+        y: popoverY,
+        properties: {
+          possibilityOfSuccess: 80,
+          appliedAlgorithm: 'K-Nearest Neighbors',
+          gtfsStopId: properties['GTFS Stop ID'], 
+          latitude: coordinates[0],
+          longitude: coordinates[1],
+        },
+      });
+    
+      setHighlightedBuildingId(properties.id);
     });
 
     setMap(currentMap);
     return () => currentMap.remove();
   }, []);
 
-  return <MapContainer ref={mapContainerRef}></MapContainer>;
+  return (<MapContainer ref={mapContainerRef}>
+            <Panel />
+            {popoverInfo && (
+              <Popover x={popoverInfo.x} y={popoverInfo.y} properties={popoverInfo.properties} />
+            )}
+          </MapContainer>
+  );
 }
 
 export default App;
