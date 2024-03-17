@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -11,7 +11,8 @@ const PanelContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1;
   transition: transform 0.3s ease-in-out;
-  transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(-100%)')};
+  transform: ${({ isOpen }) =>
+    isOpen ? "translateX(0)" : "translateX(-100%)"};
 `;
 
 const ToggleButton = styled.button`
@@ -26,10 +27,10 @@ const ToggleButton = styled.button`
 `;
 
 const Panel = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setisOpen] = useState(true);
 
   const togglePanel = () => {
-    setIsOpen(!isOpen);
+    setisOpen(!isOpen);
   };
 
   return (
@@ -46,17 +47,19 @@ const Panel = () => {
       <label>
         <input type="checkbox" />
         🗺️ Google Map Data
-        </label><br />
-        <label>
+      </label>
+      <br />
+      <label>
         <input type="checkbox" />
         🚗 Traffic Data
-        </label><br />
-        <label>
+      </label>
+      <br />
+      <label>
         <input type="checkbox" />
         🚇 Subway Stations
       </label>
 
-      <ToggleButton onClick={togglePanel}>{isOpen ? '>' : '<'}</ToggleButton>
+      <ToggleButton onClick={togglePanel}>{isOpen ? "<" : ">"}</ToggleButton>
     </PanelContainer>
   );
 };
