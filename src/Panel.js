@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { H1Title, H3Title } from "./Components/titles";
 
 const PanelContainer = styled.div`
   position: absolute;
   top: 10px;
   left: 10px;
-  width: 200px;
+  width: 400px;
+  height: calc(99.5% - 10px);
   background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -35,30 +37,18 @@ const Panel = () => {
 
   return (
     <PanelContainer isOpen={isOpen}>
-      <h2>Traffic-Driven Restaurant Success Prediction</h2>
-      <h3>ML Algorithm :</h3>
+      <H1Title>Traffic-Driven Restaurant Success Prediction</H1Title>
+      <H3Title>Layers :</H3Title>
       <select>
-        <option value="knn">K-Nearest Neighbors</option>
-        <option value="svm">Support Vector Machine</option>
-        <option value="randomForest">Random Forest</option>
-        <option value="decisionTree">Decision Tree</option>
+        <option value="knn">(Prediction) K-Nearest Neighbors</option>
+        <option value="svm">(Prediction) Support Vector Machine</option>
+        <option value="randomForest">(Prediction) Random Forest</option>
+        <option value="decisionTree">(Prediction) Decision Tree</option>
+        <option value="data1">(Data) Dataset1</option>
+        <option value="data2">(Data) Dataset2</option>
+        <option value="data3">(Data) Dataset3</option>
+        <option value="data4">(Data) Dataset4</option>
       </select>
-      <h3>Layers to show :</h3>
-      <label>
-        <input type="checkbox" />
-        🗺️ Google Map Data
-      </label>
-      <br />
-      <label>
-        <input type="checkbox" />
-        🚗 Traffic Data
-      </label>
-      <br />
-      <label>
-        <input type="checkbox" />
-        🚇 Subway Stations
-      </label>
-
       <ToggleButton onClick={togglePanel}>{isOpen ? "<" : ">"}</ToggleButton>
     </PanelContainer>
   );

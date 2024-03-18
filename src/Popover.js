@@ -2,38 +2,25 @@ import React from "react";
 import styled from "styled-components";
 
 const PopoverContainer = styled.div`
-  background-color: white;
-  border-radius: 4px;
-  padding: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  width: 250px;
-`;
-
-const PopoverArrow = styled.div`
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 5px;
-  border-color: transparent transparent white transparent;
+  color: #212121;
 `;
 
 const Popover = ({ properties }) => {
   const stopPropagation = (e) => {
     e.stopPropagation();
   };
-
   return (
     <PopoverContainer onClick={stopPropagation}>
-      <PopoverArrow />
       <div>
-        <strong>Possibility of Success:</strong>{" "}
-        {properties.possibilityOfSuccess}%
+        <strong>bin:</strong> {properties.bin}
       </div>
       <div>
-        <strong>Applied ML Algorithm:</strong> {properties.appliedAlgorithm}
+        <strong>AADT 2019 (idw):</strong>{" "}
+        {Math.round(properties.idw_aadt_2019 * 1000) / 1000}
       </div>
       <div>
-        <strong>GTFS Stop ID:</strong> {properties.gtfsStopId}
+        <strong>distance_from_station(ft):</strong>{" "}
+        {properties["distance_from_station(ft)"]}
       </div>
     </PopoverContainer>
   );
