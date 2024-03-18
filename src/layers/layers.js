@@ -12,16 +12,15 @@ export const buildingLayer = {
       "#2196f3",
     ],
     "fill-opacity": 0.3,
-    "fill-outline-color": "transparent",
+    "fill-outline-color": "#212121",
   },
 };
 
 export const highlightLayer = {
   id: "building-highlighted",
-  type: "fill",
+  type: "line",
   paint: {
-    "fill-outline-color": "#fff",
-    "fill-color": "transparent",
-    "fill-opacity": 0.75,
+    "line-color": "#fff",
+    "line-width": 3,
   },
 };
