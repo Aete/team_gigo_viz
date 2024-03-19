@@ -13,8 +13,8 @@ const PanelContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1;
   transition: transform 0.3s ease-in-out;
-  transform: ${({ isOpen }) =>
-    isOpen ? "translateX(0)" : "translateX(-100%)"};
+  transform: ${({ $isOpen }) =>
+    $isOpen ? "translateX(0)" : "translateX(-100%)"};
 `;
 
 const ToggleButton = styled.button`
@@ -28,7 +28,7 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
-const Panel = () => {
+const Panel = ({ handleSelect }) => {
   const [isOpen, setisOpen] = useState(true);
 
   const togglePanel = () => {
@@ -36,18 +36,12 @@ const Panel = () => {
   };
 
   return (
-    <PanelContainer isOpen={isOpen}>
+    <PanelContainer $isOpen={isOpen}>
       <H1Title>Traffic-Driven Restaurant Success Prediction</H1Title>
       <H3Title>Layers :</H3Title>
-      <select>
-        <option value="knn">(Prediction) K-Nearest Neighbors</option>
-        <option value="svm">(Prediction) Support Vector Machine</option>
-        <option value="randomForest">(Prediction) Random Forest</option>
-        <option value="decisionTree">(Prediction) Decision Tree</option>
-        <option value="data1">(Data) Dataset1</option>
-        <option value="data2">(Data) Dataset2</option>
-        <option value="data3">(Data) Dataset3</option>
-        <option value="data4">(Data) Dataset4</option>
+      <select onChange={handleSelect}>
+        <option value="accessibility">(Prediction) Algorithm 1</option>
+        <option value="data1">(Data) Feature1</option>
       </select>
       <ToggleButton onClick={togglePanel}>{isOpen ? "<" : ">"}</ToggleButton>
     </PanelContainer>

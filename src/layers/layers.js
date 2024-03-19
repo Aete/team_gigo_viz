@@ -1,3 +1,21 @@
+export const accessibilityLayer = {
+  id: "building_accessibility",
+  type: "fill",
+  paint: {
+    "fill-color": [
+      "interpolate",
+      ["linear"],
+      ["get", "distance_from_station(ft)"],
+      0,
+      "#fff",
+      300,
+      "#2196f3",
+    ],
+    "fill-opacity": 0.3,
+    "fill-outline-color": "#212121",
+  },
+};
+
 export const buildingLayer = {
   id: "building_json",
   type: "fill",
@@ -9,7 +27,7 @@ export const buildingLayer = {
       0,
       "#fff",
       300,
-      "#2196f3",
+      "#f44336",
     ],
     "fill-opacity": 0.3,
     "fill-outline-color": "#212121",
