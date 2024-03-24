@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { H1Title, H3Title } from "./Components/titles";
 
+import AlgorithmComparisonChart from "./Components/AlgorithmComparisonChart";
+import TopSuccessSpotsList from "./Components/TopSuccessSpotsList";
+
 const PanelContainer = styled.div`
   position: absolute;
   top: 10px;
@@ -28,21 +31,39 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
+const ChartsContainer = styled.div`
+  margin-top: 20px;
+`;
+
+
 const Panel = ({ handleSelect }) => {
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState("accessibility");
+
   const [isOpen, setisOpen] = useState(true);
 
   const togglePanel = () => {
     setisOpen(!isOpen);
   };
 
+  const handleAlgorithmSelect = (e) => {
+    const selectedValue = e.target.value;
+    setSelectedAlgorithm(selectedValue);
+    handleSelect(e);
+  };
+
   return (
     <PanelContainer $isOpen={isOpen}>
       <H1Title>Traffic-Driven Restaurant Success Prediction</H1Title>
       <H3Title>Layers :</H3Title>
-      <select onChange={handleSelect}>
+      <select value={selectedAlgorithm} onChange={handleAlgorithmSelect}>
         <option value="accessibility">(Prediction) Algorithm 1</option>
+        <option value="algorithm2">(Prediction) Algorithm 2</option>
         <option value="data1">(Data) Feature1</option>
       </select>
+      <ChartsContainer>
+        <AlgorithmComparisonChart selectedAlgorithm={selectedAlgorithm} />
+        <TopSuccessSpotsList selectedAlgorithm={selectedAlgorithm} />
+      </ChartsContainer>
       <ToggleButton onClick={togglePanel}>{isOpen ? "<" : ">"}</ToggleButton>
     </PanelContainer>
   );
