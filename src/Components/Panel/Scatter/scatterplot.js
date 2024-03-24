@@ -33,6 +33,8 @@ export function ScatterPlot(element) {
   });
 
   this.update = (bin, xFeature, yFeature) => {
+    if (!data) return;
+
     const xScale = d3
       .scaleLinear()
       .domain([0, d3.max(data.map((d) => parseInt(d[xFeature])))])
@@ -68,7 +70,6 @@ export function ScatterPlot(element) {
     circles.exit().remove();
 
     if (bin) {
-      console.log("test");
       const redCircles = container
         .selectAll(".red-circle")
         .data(data.filter((d) => bin && d.bin === bin));

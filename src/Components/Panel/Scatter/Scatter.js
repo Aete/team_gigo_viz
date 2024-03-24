@@ -37,7 +37,7 @@ export default function Scatter({ building }) {
     } else {
       chart.update(building && building.properties.bin, xFeature, yFeature);
     }
-  }, [building, xFeature, yFeature]);
+  }, [building, xFeature, yFeature, chart]);
 
   const handleXChange = (e) => {
     const selectedValue = e.target.value;
@@ -52,13 +52,13 @@ export default function Scatter({ building }) {
   return (
     <ScatterContainer>
       <ScatterHeader>
-        <span>X:</span>
+        X:
         <select value={xFeature} onChange={handleXChange}>
           <option value="office_area">Office Area</option>
           <option value="retail_area">Retail Area</option>
           <option value="residential_area">Residential Area</option>
         </select>
-        <span>Y:</span>
+        Y:
         <select value={yFeature} onChange={handleYChange}>
           <option value="office_area">Office Area</option>
           <option value="retail_area">Retail Area</option>
