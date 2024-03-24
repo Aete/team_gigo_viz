@@ -71,7 +71,6 @@ function App() {
 
     const latitude = centroid[1];
     const longitude = centroid[0];
-    console.log(centroid[0], centroid[1]);
     setViewport({ ...viewport, latitude, longitude, transitionDuration: 1000 });
   };
 
