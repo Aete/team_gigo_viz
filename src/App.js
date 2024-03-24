@@ -26,6 +26,12 @@ const mapboxAccessToken =
   "pk.eyJ1Ijoic2doYW4iLCJhIjoiY2szamxqbjZnMGtmbTNjbXZzamh4cng3dSJ9.GGv4GVVoZ811d6PKi54PrA";
 
 function App() {
+  const [viewport, setViewport] = useState({
+    latitude: 40.746676,
+    longitude: -73.9901321,
+    zoom: 12,
+    transitionDuration: 1000,
+  });
   const [selectedBuilding, setSelectedBuilding] = useState(null);
   const [selectedBin, setSelectedBin] = useState(null);
   const [selectedLayer, setSelectedLayer] = useState("accessibility");
@@ -62,17 +68,18 @@ function App() {
     const centroid = calculateCentroid(coordinates);
     setSelectedBuilding({ properties, centroid });
     setSelectedBin(bin.toString());
+
+    const latitude = centroid[1];
+    const longitude = centroid[0];
+    console.log(centroid[0], centroid[1]);
+    setViewport({ ...viewport, latitude, longitude, transitionDuration: 1000 });
   };
 
   return (
     <MapContainer>
       <GlobalStyle />
       <Map
-        initialViewState={{
-          latitude: 40.746676,
-          longitude: -73.9901321,
-          zoom: 12,
-        }}
+        {...viewport}
         mapboxAccessToken={mapboxAccessToken}
         mapStyle="mapbox://styles/sghan/ck1ljdcmy16fc1cpg0f4qh3wu"
         onClick={handleMapClick}
