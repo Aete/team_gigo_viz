@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { H1Title, H3Title } from "./Components/titles";
 
-import Overview from "./Components/Panel/Overview";
+import Overview from "./Components/Panel/Overview/Overview";
 import { Navigation } from "./Components/Panel/Navigation";
 import Table from "./Components/Panel/Table";
+import Scatter from "./Components/Panel/Scatter/Scatter";
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -63,6 +64,7 @@ const Panel = ({ handleSelect, building }) => {
       )}
 
       {subMenu === "table" && <Table building={building} />}
+      {subMenu === "scatter" && <Scatter building={building} />}
       <ToggleButton onClick={togglePanel}>{isOpen ? "<" : ">"}</ToggleButton>
     </PanelContainer>
   );

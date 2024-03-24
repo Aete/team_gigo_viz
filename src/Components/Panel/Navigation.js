@@ -40,12 +40,6 @@ export function Navigation({ subMenu, setSubMenu }) {
         Scatter
       </li>
       <li
-        onClick={() => setSubMenu("histogram")}
-        className={subMenu === "histogram" ? "active" : "inActive"}
-      >
-        Histogram
-      </li>
-      <li
         onClick={() => setSubMenu("table")}
         className={subMenu === "table" ? "active" : "inActive"}
       >

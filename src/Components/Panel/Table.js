@@ -21,12 +21,14 @@ export default function TableBox({ building }) {
   let rows;
   if (building !== null) {
     const { properties } = building;
-    rows = Object.entries(properties).map(([k, v]) => {
-      return {
-        key: k,
-        value: parseInt(v),
-      };
-    });
+    rows = Object.entries(properties)
+      .map(([k, v]) => {
+        return {
+          key: k,
+          value: parseFloat(v) ? Math.round(parseFloat(v) * 100) / 100 : v,
+        };
+      })
+      .filter((row) => row.key !== "globalid");
   }
 
   return (
@@ -34,7 +36,7 @@ export default function TableBox({ building }) {
       {!building && "Please select any building"}
       {building && (
         <TableContainer component={Paper} style={{ maxHeight: 500 }}>
-          <Table sx={{ minWidth: 250 }} aria-label="simple table" stickyHeader>
+          <Table sx={{ maxWidth: 400 }} aria-label="simple table" stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell
