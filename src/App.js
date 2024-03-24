@@ -4,7 +4,7 @@ import Map, { Popup, Source, Layer } from "react-map-gl";
 
 import styled from "styled-components";
 
-import buildingJson from "./utils/data/building.geojson";
+import buildingJson from "./utils/data/building.json";
 import calculateCentroid from "./utils/calCentroid";
 
 import Panel from "./Panel";
@@ -27,6 +27,7 @@ const mapboxAccessToken =
 
 function App() {
   const [selectedBuilding, setSelectedBuilding] = useState(null);
+  const [selectedBin, setSelectedBin] = useState(null);
   const [selectedLayer, setSelectedLayer] = useState("accessibility");
 
   const handleMapClick = (e) => {
@@ -34,24 +35,33 @@ function App() {
     if (features && features.length > 0) {
       const properties = features[0].properties;
       const coordinates = features[0].geometry.coordinates[0];
+      console.log(coordinates);
       const centroid = calculateCentroid(coordinates);
       setSelectedBuilding({ properties, centroid });
+      setSelectedBin(properties.bin);
     } else {
       setSelectedBuilding(null);
+      setSelectedBin(null);
     }
   };
 
-  const clickedBuilding =
-    (selectedBuilding && selectedBuilding.properties.bin) || "";
-
-  const filter = useMemo(
-    () => ["in", "bin", clickedBuilding],
-    [clickedBuilding]
-  );
+  const filter = useMemo(() => ["in", "bin", selectedBin || ""], [selectedBin]);
 
   const handleLayerSelect = (e) => {
     e.preventDefault();
     setSelectedLayer(e.target.value);
+  };
+
+  const handleBinSelect = (bin) => {
+    const building = buildingJson.features.filter(
+      (row) => parseInt(row.properties.bin) === bin
+    )[0];
+
+    const properties = building.properties;
+    const coordinates = building.geometry.coordinates[0][0];
+    const centroid = calculateCentroid(coordinates);
+    setSelectedBuilding({ properties, centroid });
+    setSelectedBin(bin.toString());
   };
 
   return (
@@ -98,7 +108,11 @@ function App() {
           </Popup>
         )}
       </Map>
-      <Panel handleSelect={handleLayerSelect} building={selectedBuilding} />
+      <Panel
+        handleSelect={handleLayerSelect}
+        building={selectedBuilding}
+        handleBinSelect={handleBinSelect}
+      />
     </MapContainer>
   );
 }

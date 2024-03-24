@@ -12,6 +12,9 @@ const AlgorithmComparisonChart = ({ selectedAlgorithm }) => {
     return {
       accessibility: { accuracy: 0.85 },
       algorithm2: { accuracy: 0.88 },
+      algorithm3: { accuracy: 0.78 },
+      algorithm4: { accuracy: 0.7 },
+      algorithm5: { accuracy: 0.83 },
     };
   }, []);
 
@@ -69,8 +72,8 @@ const AlgorithmComparisonChart = ({ selectedAlgorithm }) => {
 
     svg
       .append("text")
-      .attr("x", width / 2)
-      .attr("y", margin.top / 2)
+      .attr("x", width / 2 - 30)
+      .attr("y", margin.top / 2 - 10)
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("font-weight", "bold")

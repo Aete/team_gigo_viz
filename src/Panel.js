@@ -33,7 +33,7 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
-const Panel = ({ handleSelect, building }) => {
+const Panel = ({ handleSelect, building, handleBinSelect }) => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState("accessibility");
   const [subMenu, setSubMenu] = useState("overview");
 
@@ -60,11 +60,17 @@ const Panel = ({ handleSelect, building }) => {
       </select>
       <Navigation setSubMenu={setSubMenu} subMenu={subMenu} />
       {subMenu === "overview" && (
-        <Overview building={building} selectedAlgorithm={selectedAlgorithm} />
+        <Overview
+          building={building}
+          selectedAlgorithm={selectedAlgorithm}
+          handleBinSelect={handleBinSelect}
+        />
       )}
 
       {subMenu === "table" && <Table building={building} />}
-      {subMenu === "scatter" && <Scatter building={building} />}
+      {subMenu === "scatter" && (
+        <Scatter building={building} handleBinSelect={handleBinSelect} />
+      )}
       <ToggleButton onClick={togglePanel}>{isOpen ? "<" : ">"}</ToggleButton>
     </PanelContainer>
   );

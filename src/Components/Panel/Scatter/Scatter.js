@@ -23,7 +23,7 @@ const ScatterHeader = styled.div`
   }
 `;
 
-export default function Scatter({ building }) {
+export default function Scatter({ building, handleBinSelect }) {
   const [chart, setChart] = useState(null);
   const [xFeature, setXFeature] = useState("office_area");
   const [yFeature, setYFeature] = useState("retail_area");
@@ -32,11 +32,11 @@ export default function Scatter({ building }) {
 
   useEffect(() => {
     if (!chart) {
-      setChart(new ScatterPlot(container.current));
+      setChart(new ScatterPlot(container.current, handleBinSelect));
     } else {
       chart.update(building && building.properties.bin, xFeature, yFeature);
     }
-  }, [building, xFeature, yFeature, chart]);
+  }, [building, xFeature, yFeature, chart, handleBinSelect]);
 
   const handleXChange = (e) => {
     const selectedValue = e.target.value;

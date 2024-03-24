@@ -8,30 +8,69 @@ const ListContainer = styled.div`
   & li {
     margin-bottom: 8px;
     font-size: 15px;
+    cursor: pointer;
+  }
+
+  & li:hover {
+    font-weight: bold;
   }
 `;
 
-const TopSuccessSpotsList = ({ selectedAlgorithm }) => {
-  const listData = {
-    accessibility: [
-      { id: 1, name: "Spot 1", probability: 0.95 },
-      { id: 2, name: "Spot 2", probability: 0.92 },
-      // ...
-    ],
-    algorithm2: [
-      { id: 1, name: "Spot 1", probability: 0.93 },
-      { id: 2, name: "Spot 2", probability: 0.91 },
-      // ...
-    ],
-  };
+const listData = {
+  accessibility: [
+    { id: 1, name: "Spot 1", probability: 0.95, bin: 1062896 },
+    { id: 2, name: "Spot 2", probability: 0.92, bin: 1034194 },
+    { id: 3, name: "Spot 3", probability: 0.92, bin: 1034194 },
+    { id: 4, name: "Spot 4", probability: 0.92, bin: 1034194 },
+    { id: 5, name: "Spot 5", probability: 0.92, bin: 1034194 },
+    { id: 6, name: "Spot 6", probability: 0.92, bin: 1034194 },
+    { id: 7, name: "Spot 7", probability: 0.92, bin: 1034194 },
+    { id: 8, name: "Spot 8", probability: 0.92, bin: 1034194 },
+    { id: 9, name: "Spot 9", probability: 0.92, bin: 1034194 },
+    { id: 10, name: "Spot 10", probability: 0.92, bin: 1034194 },
 
+    // ...
+  ],
+  algorithm2: [
+    { id: 1, name: "Spot 1", probability: 0.95, bin: 1062896 },
+    { id: 2, name: "Spot 2", probability: 0.92, bin: 1034194 },
+    { id: 3, name: "Spot 3", probability: 0.92, bin: 1034194 },
+    { id: 4, name: "Spot 4", probability: 0.92, bin: 1034194 },
+    { id: 5, name: "Spot 5", probability: 0.92, bin: 1034194 },
+    { id: 6, name: "Spot 6", probability: 0.92, bin: 1034194 },
+    { id: 7, name: "Spot 7", probability: 0.92, bin: 1034194 },
+    { id: 8, name: "Spot 8", probability: 0.92, bin: 1034194 },
+    { id: 9, name: "Spot 9", probability: 0.92, bin: 1034194 },
+    { id: 10, name: "Spot 10", probability: 0.92, bin: 1034194 },
+    // ...
+  ],
+
+  algorithm3: [
+    { id: 1, name: "Spot 1", probability: 0.95, bin: 1062896 },
+    { id: 2, name: "Spot 2", probability: 0.92, bin: 1034194 },
+    { id: 3, name: "Spot 3", probability: 0.92, bin: 1034194 },
+    { id: 4, name: "Spot 4", probability: 0.92, bin: 1034194 },
+    { id: 5, name: "Spot 5", probability: 0.92, bin: 1034194 },
+    { id: 6, name: "Spot 6", probability: 0.92, bin: 1034194 },
+    { id: 7, name: "Spot 7", probability: 0.92, bin: 1034194 },
+    { id: 8, name: "Spot 8", probability: 0.92, bin: 1034194 },
+    { id: 9, name: "Spot 9", probability: 0.92, bin: 1034194 },
+    { id: 10, name: "Spot 10", probability: 0.92, bin: 1034194 },
+    // ...
+  ],
+};
+
+const TopSuccessSpotsList = ({ selectedAlgorithm, handleBinSelect }) => {
+  const handleClick = (bin) => {
+    handleBinSelect(bin);
+  };
   return (
     <ListContainer>
       <H4Title>Top Success Spots</H4Title>
       <ul>
         {listData[selectedAlgorithm] !== undefined &&
           listData[selectedAlgorithm].map((spot) => (
-            <li key={spot.id}>
+            <li key={spot.id} onClick={(e) => handleClick(spot.bin)}>
               {spot.name} - {spot.probability}
             </li>
           ))}

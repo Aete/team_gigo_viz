@@ -1,13 +1,12 @@
 import * as d3 from "d3";
 import csvData from "../../../utils/data/building_240324_1726.csv";
 
-export function ScatterPlot(element) {
+export function ScatterPlot(element, handleBinSelect) {
   const margin = { top: 50, bottom: 50, right: 50, left: 50 };
   const height = 400 - margin.top - margin.bottom;
   const width = 400 - margin.left - margin.right;
 
   let data;
-
   const svg = d3
     .select(element)
     .append("svg")
@@ -61,7 +60,17 @@ export function ScatterPlot(element) {
       .attr("r", 5)
       .attr("fill", (d) => (bin && d.bin === bin ? "#f44336" : "#424242"))
       .attr("fill-opacity", 0.2)
-      .merge(circles)
+      .on("mouseenter", function (e) {
+        d3.select(this).attr("fill", "#f44336").attr("fill-opacity", 0.7);
+      })
+      .on("mouseout", function (e) {
+        d3.select(this).attr("fill", "#424242").attr("fill-opacity", 0.2);
+      })
+      .on("click", function (event, d) {
+        handleBinSelect(parseInt(d.bin));
+      });
+
+    circles
       .transition()
       .duration(500)
       .attr("cx", (d) => xScale(d[xFeature]))

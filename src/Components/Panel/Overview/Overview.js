@@ -6,11 +6,14 @@ const ChartsContainer = styled.div`
   margin-top: 20px;
 `;
 
-export default function Overview({ selectedAlgorithm }) {
+export default function Overview({ selectedAlgorithm, handleBinSelect }) {
   return (
     <ChartsContainer>
       <AlgorithmComparisonChart selectedAlgorithm={selectedAlgorithm} />
-      <TopSuccessSpotsList selectedAlgorithm={selectedAlgorithm} />
+      <TopSuccessSpotsList
+        selectedAlgorithm={selectedAlgorithm}
+        handleBinSelect={handleBinSelect}
+      />
     </ChartsContainer>
   );
 }
