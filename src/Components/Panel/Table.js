@@ -19,7 +19,6 @@ const TableContainerDiv = styled.div`
 
 export default function TableBox({ building }) {
   let rows;
-  console.log(building);
   if (building !== null) {
     const { properties } = building;
     rows = Object.entries(properties).map(([k, v]) => {

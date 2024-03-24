@@ -6,8 +6,7 @@ const ChartsContainer = styled.div`
   margin-top: 20px;
 `;
 
-export default function Overview({ selectedAlgorithm, bin }) {
-  console.log(bin);
+export default function Overview({ selectedAlgorithm }) {
   return (
     <ChartsContainer>
       <AlgorithmComparisonChart selectedAlgorithm={selectedAlgorithm} />
