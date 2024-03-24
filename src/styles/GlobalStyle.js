@@ -3,6 +3,7 @@ import reset from "styled-reset";
 
 export const GlobalStyle = createGlobalStyle`
     ${reset}
+
     html, body, #root{
         font-family: "Open Sans", sans-serif;
         margin:0;

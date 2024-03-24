@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { H1Title, H3Title } from "./Components/titles";
 
-import AlgorithmComparisonChart from "./Components/AlgorithmComparisonChart";
-import TopSuccessSpotsList from "./Components/TopSuccessSpotsList";
+import Overview from "./Components/Panel/Overview";
+import { Navigation } from "./Components/Panel/Navigation";
+import Table from "./Components/Panel/Table";
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -31,13 +32,9 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
-const ChartsContainer = styled.div`
-  margin-top: 20px;
-`;
-
-
-const Panel = ({ handleSelect }) => {
+const Panel = ({ handleSelect, building }) => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState("accessibility");
+  const [subMenu, setSubMenu] = useState("overview");
 
   const [isOpen, setisOpen] = useState(true);
 
@@ -60,10 +57,12 @@ const Panel = ({ handleSelect }) => {
         <option value="algorithm2">(Prediction) Algorithm 2</option>
         <option value="data1">(Data) Feature1</option>
       </select>
-      <ChartsContainer>
-        <AlgorithmComparisonChart selectedAlgorithm={selectedAlgorithm} />
-        <TopSuccessSpotsList selectedAlgorithm={selectedAlgorithm} />
-      </ChartsContainer>
+      <Navigation setSubMenu={setSubMenu} subMenu={subMenu} />
+      {subMenu === "overview" && (
+        <Overview building={building} selectedAlgorithm={selectedAlgorithm} />
+      )}
+
+      {subMenu === "table" && <Table building={building} />}
       <ToggleButton onClick={togglePanel}>{isOpen ? "<" : ">"}</ToggleButton>
     </PanelContainer>
   );

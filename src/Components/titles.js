@@ -7,7 +7,13 @@ export const H1Title = styled.h1`
 `;
 
 export const H3Title = styled.h3`
-  font-size: 15px;
+  font-size: 20px;
   font-weight: semi-bold;
+  margin-bottom: 10px;
+`;
+
+export const H4Title = styled.h3`
+  font-size: 18px;
+  font-weight: bold;
   margin-bottom: 10px;
 `;

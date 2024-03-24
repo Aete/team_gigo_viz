@@ -1,8 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { H4Title } from "../titles";
 
 const ListContainer = styled.div`
   margin-top: 20px;
+
+  & li {
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
 `;
 
 const TopSuccessSpotsList = ({ selectedAlgorithm }) => {
@@ -21,13 +27,14 @@ const TopSuccessSpotsList = ({ selectedAlgorithm }) => {
 
   return (
     <ListContainer>
-      <h4>Top Success Spots</h4>
+      <H4Title>Top Success Spots</H4Title>
       <ul>
-        {listData[selectedAlgorithm] != undefined && listData[selectedAlgorithm].map((spot) => (
-          <li key={spot.id}>
-            {spot.name} - {spot.probability}
-          </li>
-        ))}
+        {listData[selectedAlgorithm] !== undefined &&
+          listData[selectedAlgorithm].map((spot) => (
+            <li key={spot.id}>
+              {spot.name} - {spot.probability}
+            </li>
+          ))}
       </ul>
     </ListContainer>
   );

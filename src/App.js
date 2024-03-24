@@ -98,7 +98,7 @@ function App() {
           </Popup>
         )}
       </Map>
-      <Panel handleSelect={handleLayerSelect} />
+      <Panel handleSelect={handleLayerSelect} building={selectedBuilding} />
     </MapContainer>
   );
 }
