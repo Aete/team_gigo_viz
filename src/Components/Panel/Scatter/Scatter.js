@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ScatterPlot } from "./scatterplot";
-import { span } from "../../titles";
 
 const ScatterContainer = styled.div`
   width: 100%;
