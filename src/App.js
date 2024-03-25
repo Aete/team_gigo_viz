@@ -26,12 +26,12 @@ const mapboxAccessToken =
   "pk.eyJ1Ijoic2doYW4iLCJhIjoiY2szamxqbjZnMGtmbTNjbXZzamh4cng3dSJ9.GGv4GVVoZ811d6PKi54PrA";
 
 function App() {
-  const [viewport, setViewport] = useState({
+  const viewport = {
     latitude: 40.746676,
     longitude: -73.9901321,
     zoom: 12,
     transitionDuration: 1000,
-  });
+  };
   const mapRef = useRef();
   const [selectedBuilding, setSelectedBuilding] = useState(null);
   const [selectedBin, setSelectedBin] = useState(null);
