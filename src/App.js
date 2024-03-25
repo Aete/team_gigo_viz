@@ -1,5 +1,5 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import Map, { Popup, Source, Layer } from "react-map-gl";
 
 import styled from "styled-components";
@@ -32,6 +32,7 @@ function App() {
     zoom: 12,
     transitionDuration: 1000,
   });
+  const mapRef = useRef();
   const [selectedBuilding, setSelectedBuilding] = useState(null);
   const [selectedBin, setSelectedBin] = useState(null);
   const [selectedLayer, setSelectedLayer] = useState("accessibility");
@@ -59,6 +60,12 @@ function App() {
   };
 
   const handleBinSelect = (bin) => {
+    if (bin.toString() === selectedBin) {
+      console.log("test");
+      setSelectedBuilding(null);
+      setSelectedBin(null);
+      return;
+    }
     const building = buildingJson.features.filter(
       (row) => parseInt(row.properties.bin) === bin
     )[0];
@@ -71,18 +78,19 @@ function App() {
 
     const latitude = centroid[1];
     const longitude = centroid[0];
-    setViewport({ ...viewport, latitude, longitude, transitionDuration: 1000 });
+    mapRef.current?.flyTo({ center: [longitude, latitude], zoom: 13 });
   };
 
   return (
     <MapContainer>
       <GlobalStyle />
       <Map
-        {...viewport}
+        initialViewState={viewport}
         mapboxAccessToken={mapboxAccessToken}
         mapStyle="mapbox://styles/sghan/ck1ljdcmy16fc1cpg0f4qh3wu"
         onClick={handleMapClick}
         interactiveLayerIds={["building_accessibility", "building_json"]}
+        ref={mapRef}
       >
         <Source type="geojson" data={buildingJson}>
           <Layer
