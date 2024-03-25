@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import csvData from "../../../utils/data/building_240324_1726.csv";
 
-export function ScatterPlot(element, handleBinSelect) {
+export function ScatterPlot(element, bin, handleBinSelect) {
   const margin = { top: 50, bottom: 50, right: 50, left: 50 };
   const height = 400 - margin.top - margin.bottom;
   const width = 400 - margin.left - margin.right;
@@ -23,12 +23,29 @@ export function ScatterPlot(element, handleBinSelect) {
 
   const yAxis = container.append("g");
 
+  const showLoading = () => {
+    container
+      .append("text")
+      .attr("class", "loading-text")
+      .attr("x", width / 2)
+      .attr("y", height / 2)
+      .attr("text-anchor", "middle")
+      .text("Loading...");
+  };
+
+  const hideLoading = () => {
+    container.select(".loading-text").remove();
+  };
+
+  showLoading();
+
   d3.csv(csvData).then((d) => {
     data = d;
     const xFeature = "office_area";
     const yFeature = "retail_area";
 
-    this.update(null, xFeature, yFeature);
+    this.update(bin, xFeature, yFeature);
+    hideLoading();
   });
 
   this.update = (bin, xFeature, yFeature) => {

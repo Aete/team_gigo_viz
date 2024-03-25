@@ -32,7 +32,13 @@ export default function Scatter({ building, handleBinSelect }) {
 
   useEffect(() => {
     if (!chart) {
-      setChart(new ScatterPlot(container.current, handleBinSelect));
+      setChart(
+        new ScatterPlot(
+          container.current,
+          building && building.properties.bin,
+          handleBinSelect
+        )
+      );
     } else {
       chart.update(building && building.properties.bin, xFeature, yFeature);
     }
