@@ -42,7 +42,6 @@ function App() {
     if (features && features.length > 0) {
       const properties = features[0].properties;
       const coordinates = features[0].geometry.coordinates[0];
-      console.log(coordinates);
       const centroid = calculateCentroid(coordinates);
       setSelectedBuilding({ properties, centroid });
       setSelectedBin(properties.bin);
@@ -61,7 +60,6 @@ function App() {
 
   const handleBinSelect = (bin) => {
     if (bin.toString() === selectedBin) {
-      console.log("test");
       setSelectedBuilding(null);
       setSelectedBin(null);
       return;
