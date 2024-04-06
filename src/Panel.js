@@ -6,6 +6,8 @@ import Overview from "./Components/Panel/Overview/Overview";
 import { Navigation } from "./Components/Panel/Navigation";
 import Table from "./Components/Panel/Table";
 import Scatter from "./Components/Panel/Scatter/Scatter";
+import { useRecoilState } from "recoil";
+import { layerState, subMenuState } from "./recoil/atoms";
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -33,10 +35,10 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
-const Panel = ({ handleSelect, building, handleBinSelect }) => {
+const Panel = () => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState("accessibility");
-  const [subMenu, setSubMenu] = useState("overview");
-
+  const [, setLayer] = useRecoilState(layerState);
+  const [subMenu, setSubMenu] = useRecoilState(subMenuState);
   const [isOpen, setisOpen] = useState(true);
 
   const togglePanel = () => {
@@ -49,6 +51,11 @@ const Panel = ({ handleSelect, building, handleBinSelect }) => {
     handleSelect(e);
   };
 
+  const handleSelect = (e) => {
+    e.preventDefault();
+    setLayer(e.target.value);
+  };
+
   return (
     <PanelContainer $isOpen={isOpen}>
       <H1Title>Traffic-Driven Restaurant Success Prediction</H1Title>
@@ -59,18 +66,9 @@ const Panel = ({ handleSelect, building, handleBinSelect }) => {
         <option value="data1">(Data) Feature1</option>
       </select>
       <Navigation setSubMenu={setSubMenu} subMenu={subMenu} />
-      {subMenu === "overview" && (
-        <Overview
-          building={building}
-          selectedAlgorithm={selectedAlgorithm}
-          handleBinSelect={handleBinSelect}
-        />
-      )}
-
-      {subMenu === "table" && <Table building={building} />}
-      {subMenu === "scatter" && (
-        <Scatter building={building} handleBinSelect={handleBinSelect} />
-      )}
+      <Overview selectedAlgorithm={selectedAlgorithm} />
+      <Table />
+      <Scatter />
       <ToggleButton onClick={togglePanel}>{isOpen ? "<" : ">"}</ToggleButton>
     </PanelContainer>
   );

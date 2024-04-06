@@ -1,5 +1,5 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useState, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import Map, { Popup, Source, Layer } from "react-map-gl";
 
 import styled from "styled-components";
@@ -15,6 +15,9 @@ import {
   buildingLayer,
   highlightLayer,
 } from "./layers/layers";
+
+import { useRecoilState } from "recoil";
+import { buildingState, layerState } from "./recoil/atoms";
 
 const MapContainer = styled.div`
   position: relative;
@@ -33,9 +36,8 @@ function App() {
     transitionDuration: 1000,
   };
   const mapRef = useRef();
-  const [selectedBuilding, setSelectedBuilding] = useState(null);
-  const [selectedBin, setSelectedBin] = useState(null);
-  const [selectedLayer, setSelectedLayer] = useState("accessibility");
+  const [building, setBuilding] = useRecoilState(buildingState);
+  const [selectedLayer] = useRecoilState(layerState);
 
   const handleMapClick = (e) => {
     const features = e.features;
@@ -43,41 +45,16 @@ function App() {
       const properties = features[0].properties;
       const coordinates = features[0].geometry.coordinates[0];
       const centroid = calculateCentroid(coordinates);
-      setSelectedBuilding({ properties, centroid });
-      setSelectedBin(properties.bin);
+      setBuilding({ properties, centroid });
     } else {
-      setSelectedBuilding(null);
-      setSelectedBin(null);
+      setBuilding(null);
     }
   };
 
-  const filter = useMemo(() => ["in", "bin", selectedBin || ""], [selectedBin]);
-
-  const handleLayerSelect = (e) => {
-    e.preventDefault();
-    setSelectedLayer(e.target.value);
-  };
-
-  const handleBinSelect = (bin) => {
-    if (bin.toString() === selectedBin) {
-      setSelectedBuilding(null);
-      setSelectedBin(null);
-      return;
-    }
-    const building = buildingJson.features.filter(
-      (row) => parseInt(row.properties.bin) === bin
-    )[0];
-
-    const properties = building.properties;
-    const coordinates = building.geometry.coordinates[0][0];
-    const centroid = calculateCentroid(coordinates);
-    setSelectedBuilding({ properties, centroid });
-    setSelectedBin(bin.toString());
-
-    const latitude = centroid[1];
-    const longitude = centroid[0];
-    mapRef.current?.flyTo({ center: [longitude, latitude], zoom: 13 });
-  };
+  const filter = useMemo(
+    () => ["in", "bin", building?.properties.bin || ""],
+    [building]
+  );
 
   return (
     <MapContainer>
@@ -106,25 +83,21 @@ function App() {
           />
           <Layer {...highlightLayer} filter={filter} />
         </Source>
-        {selectedBuilding && (
+        {building && (
           <Popup
-            latitude={selectedBuilding.centroid[1]}
-            longitude={selectedBuilding.centroid[0]}
+            latitude={building.centroid[1]}
+            longitude={building.centroid[0]}
             offset={[0, -10]}
             closeButton={true}
             closeOnClick={false}
-            onClose={() => setSelectedBuilding(null)}
+            onClose={() => setBuilding(null)}
             anchor="bottom"
           >
-            <Popover properties={selectedBuilding.properties} />
+            <Popover properties={building.properties} />
           </Popup>
         )}
       </Map>
-      <Panel
-        handleSelect={handleLayerSelect}
-        building={selectedBuilding}
-        handleBinSelect={handleBinSelect}
-      />
+      <Panel />
     </MapContainer>
   );
 }

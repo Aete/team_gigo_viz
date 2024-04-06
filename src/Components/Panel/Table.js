@@ -7,6 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useRecoilState } from "recoil";
+import { buildingState, subMenuState } from "../../recoil/atoms";
 
 const TableContainerDiv = styled.div`
   width: 100%;
@@ -15,9 +17,12 @@ const TableContainerDiv = styled.div`
   align-items: center;
   margin-top: 20px;
   min-height: 400px;
+  display: ${({ $isVisible }) => ($isVisible ? "flex" : "none")};
 `;
 
-export default function TableBox({ building }) {
+export default function TableBox() {
+  const [building] = useRecoilState(buildingState);
+  const [subMenu] = useRecoilState(subMenuState);
   let rows;
   if (building !== null) {
     const { properties } = building;
@@ -32,7 +37,7 @@ export default function TableBox({ building }) {
   }
 
   return (
-    <TableContainerDiv>
+    <TableContainerDiv $isVisible={subMenu === "table"}>
       {!building && "Please select any building"}
       {building && (
         <TableContainer component={Paper} style={{ maxHeight: 500 }}>

@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { H4Title } from "../../titles";
+import { buildingState } from "../../../recoil/atoms";
+import { useRecoilState } from "recoil";
+import calculateCentroid from "../../../utils/calCentroid";
+
+import buildingJson from "../../../utils/data/building.json";
 
 const ListContainer = styled.div`
   margin-top: 20px;
@@ -60,9 +65,23 @@ const listData = {
   ],
 };
 
-const TopSuccessSpotsList = ({ selectedAlgorithm, handleBinSelect }) => {
-  const handleClick = (bin) => {
-    handleBinSelect(bin);
+const TopSuccessSpotsList = ({ selectedAlgorithm }) => {
+  const [building, setBuilding] = useRecoilState(buildingState);
+  const setBuildingByBin = (bin) => {
+    const previousBin = building?.properties?.bin;
+
+    if (previousBin && previousBin.toString() === bin.toString()) {
+      setBuilding(null);
+    }
+
+    const buildingData = buildingJson.features.filter(
+      (row) => parseInt(row.properties.bin) === bin
+    )[0];
+
+    const properties = buildingData.properties;
+    const coordinates = buildingData.geometry.coordinates[0][0];
+    const centroid = calculateCentroid(coordinates);
+    setBuilding({ properties, centroid });
   };
   return (
     <ListContainer>
@@ -70,7 +89,7 @@ const TopSuccessSpotsList = ({ selectedAlgorithm, handleBinSelect }) => {
       <ul>
         {listData[selectedAlgorithm] !== undefined &&
           listData[selectedAlgorithm].map((spot) => (
-            <li key={spot.id} onClick={(e) => handleClick(spot.bin)}>
+            <li key={spot.id} onClick={(e) => setBuildingByBin(spot.bin)}>
               {spot.name} - {spot.probability}
             </li>
           ))}

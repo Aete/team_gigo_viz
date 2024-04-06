@@ -1,15 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ScatterPlot } from "./scatterplot";
+import { useRecoilState } from "recoil";
+import calculateCentroid from "../../../utils/calCentroid";
+import buildingJson from "../../../utils/data/building.json";
+import { buildingState, subMenuState } from "../../../recoil/atoms";
 
 const ScatterContainer = styled.div`
   width: 100%;
-  display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
   min-height: 400px;
+  display: ${({ $isVisible }) => ($isVisible ? "flex" : "none")};
 `;
 
 const ScatterHeader = styled.div`
@@ -23,26 +27,47 @@ const ScatterHeader = styled.div`
   }
 `;
 
-export default function Scatter({ building, handleBinSelect }) {
+export default function Scatter() {
+  const [building, setBuilding] = useRecoilState(buildingState);
+  const [subMenu] = useRecoilState(subMenuState);
   const [chart, setChart] = useState(null);
   const [xFeature, setXFeature] = useState("office_area");
   const [yFeature, setYFeature] = useState("retail_area");
 
   const container = useRef(null);
 
+  const setBuildingByBin = useCallback(
+    (bin) => {
+      const previousBin = building?.properties?.bin;
+
+      if (previousBin && previousBin.toString() === bin.toString()) {
+        setBuilding(null);
+      }
+
+      const buildingData = buildingJson.features.filter(
+        (row) => parseInt(row.properties.bin) === bin
+      )[0];
+
+      const properties = buildingData.properties;
+      const coordinates = buildingData.geometry.coordinates[0][0];
+      const centroid = calculateCentroid(coordinates);
+      setBuilding({ properties, centroid });
+    },
+    [building, setBuilding]
+  );
   useEffect(() => {
     if (!chart) {
       setChart(
         new ScatterPlot(
           container.current,
           building && building.properties.bin,
-          handleBinSelect
+          setBuildingByBin
         )
       );
     } else {
       chart.update(building && building.properties.bin, xFeature, yFeature);
     }
-  }, [building, xFeature, yFeature, chart, handleBinSelect]);
+  }, [building, xFeature, yFeature, chart, setBuildingByBin]);
 
   const handleXChange = (e) => {
     const selectedValue = e.target.value;
@@ -55,7 +80,7 @@ export default function Scatter({ building, handleBinSelect }) {
   };
 
   return (
-    <ScatterContainer>
+    <ScatterContainer $isVisible={subMenu === "scatter"}>
       <ScatterHeader>
         X:
         <select value={xFeature} onChange={handleXChange}>
