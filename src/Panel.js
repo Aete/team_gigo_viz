@@ -7,7 +7,12 @@ import { Navigation } from "./Components/Panel/Navigation";
 import Table from "./Components/Panel/Table";
 import Scatter from "./Components/Panel/Scatter/Scatter";
 import { useRecoilState } from "recoil";
-import { layerState, subMenuState } from "./recoil/atoms";
+import { 
+  isMainPanelOpenState, 
+  isPredictPanelOpenState, 
+  layerState, 
+  subMenuState 
+} from "./recoil/atoms";
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -15,7 +20,7 @@ const PanelContainer = styled.div`
   left: 10px;
   width: 400px;
   height: calc(99.5% - 10px);
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 1.0);
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1;
@@ -39,10 +44,11 @@ const Panel = () => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState("accessibility");
   const [, setLayer] = useRecoilState(layerState);
   const [subMenu, setSubMenu] = useRecoilState(subMenuState);
-  const [isOpen, setisOpen] = useState(true);
+  const [isMainPanelOpen, setIsMainPanelOpen] = useRecoilState(isMainPanelOpenState);
+  const [,setIsPredictPanelOpen] = useRecoilState(isPredictPanelOpenState);
 
   const togglePanel = () => {
-    setisOpen(!isOpen);
+    setIsMainPanelOpen(!isMainPanelOpen);
   };
 
   const handleAlgorithmSelect = (e) => {
@@ -57,7 +63,7 @@ const Panel = () => {
   };
 
   return (
-    <PanelContainer $isOpen={isOpen}>
+    <PanelContainer $isOpen={isMainPanelOpen}>
       <H1Title>Traffic-Driven Restaurant Success Prediction</H1Title>
       <H3Title>Layers :</H3Title>
       <select value={selectedAlgorithm} onChange={handleAlgorithmSelect}>
@@ -69,7 +75,7 @@ const Panel = () => {
       <Overview selectedAlgorithm={selectedAlgorithm} />
       <Table />
       <Scatter />
-      <ToggleButton onClick={togglePanel}>{isOpen ? "<" : ">"}</ToggleButton>
+      <ToggleButton onClick={togglePanel}>{isMainPanelOpen ? "<" : ">"}</ToggleButton>
     </PanelContainer>
   );
 };
