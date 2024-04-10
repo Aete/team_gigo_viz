@@ -8,6 +8,7 @@ import buildingJson from "./utils/data/building.json";
 import calculateCentroid from "./utils/calCentroid";
 
 import Panel from "./Panel";
+import PredictPanel from "./PredictPanel";
 import Popover from "./Popover";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import {
@@ -97,7 +98,9 @@ function App() {
           </Popup>
         )}
       </Map>
+      <PredictPanel />
       <Panel />
+
     </MapContainer>
   );
 }
