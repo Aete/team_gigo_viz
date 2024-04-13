@@ -3,12 +3,11 @@ import styled from "styled-components";
 import { H1Subtitle, H1TitleWithSubtitle, H3Title } from "./Components/titles";
 import { Button, TextField } from "@mui/material";
 import { useRecoilState } from "recoil";
-import { 
+import {
   isMainPanelOpenState,
-  isPredictPanelOpenState, 
-  layerState
+  isPredictPanelOpenState,
+  layerState,
 } from "./recoil/atoms";
-
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -21,12 +20,12 @@ const PanelContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1;
   transition: transform 0.3s ease-in-out;
-  transform: ${({ $isMainPanelOpen, $isOpen }) =>{
-    if($isMainPanelOpen) {
-      if($isOpen) return "translate(100%)";
+  transform: ${({ $isMainPanelOpen, $isOpen }) => {
+    if ($isMainPanelOpen) {
+      if ($isOpen) return "translate(100%)";
       else return "translateX(0)";
     } else {
-      if($isOpen) return "translate(0)";
+      if ($isOpen) return "translate(0)";
       else return "translateX(-100%)";
     }
   }};
@@ -35,53 +34,53 @@ const PanelContainer = styled.div`
 const ToggleButton = styled.button`
   position: absolute;
   top: 10px;
-  right: ${({ $isOpen }) => $isOpen ? "-30px" : "-100px"};
-  width: ${({ $isOpen }) => $isOpen ? "30px" : "100px"};
+  right: ${({ $isOpen }) => ($isOpen ? "-30px" : "-100px")};
+  width: ${({ $isOpen }) => ($isOpen ? "30px" : "100px")};
   height: 30px;
   background-color: #fab1a0;
   border: none;
   cursor: pointer;
 `;
 
-const PredictButton = styled.button`
-  color: white;
-  background-color: steelblue;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.5em 1em;
-  border-radius: 5px;
-`
+// const PredictButton = styled.button`
+//   color: white;
+//   background-color: steelblue;
+//   font-size: 1em;
+//   margin: 1em;
+//   padding: 0.5em 1em;
+//   border-radius: 5px;
+// `;
 
 const inputs = [
-  {'id': 'office_area	', 'label': 'Office Area'},
-  {'id': 'retail_area	', 'label': 'Retail Area'},
-  {'id': 'residential_area', 'label': 'Residential Area'},
-  {'id': 'street_width_min', 'label': 'Street Width Min'},
-  {'id': 'Street_width_max', 'label': 'Street Width Max'},
-  {'id': 'posted_speed', 'label': 'Posted Speed'},
-  {'id': 'betweeness', 'label': 'Betweeness'},
-  {'id': 'distance_from_station', 'label': 'Distance from Station(ft)'},
-  {'id': 'ridership_morning', 'label': 'Ridership Morning'},
-  {'id': 'ridership_midday', 'label': 'Ridership Midday'},
-  {'id': 'ridership_evening', 'label': 'Ridershiop Evening'},
-  {'id': 'ridership_night', 'label': 'Ridership Night'},
-  {'id': 'ridership_late_night', 'label': 'Ridership Late Night'},
+  { id: "office_area	", label: "Office Area" },
+  { id: "retail_area	", label: "Retail Area" },
+  { id: "residential_area", label: "Residential Area" },
+  { id: "street_width_min", label: "Street Width Min" },
+  { id: "Street_width_max", label: "Street Width Max" },
+  { id: "posted_speed", label: "Posted Speed" },
+  { id: "betweeness", label: "Betweeness" },
+  { id: "distance_from_station", label: "Distance from Station(ft)" },
+  { id: "ridership_morning", label: "Ridership Morning" },
+  { id: "ridership_midday", label: "Ridership Midday" },
+  { id: "ridership_evening", label: "Ridershiop Evening" },
+  { id: "ridership_night", label: "Ridership Night" },
+  { id: "ridership_late_night", label: "Ridership Late Night" },
 ];
 
 const InputContainer = styled.div`
-  display:flex;
+  display: flex;
   height: 500px;
   flex-direction: column;
   overflow: scroll;
-`
-
-
+`;
 
 const PredictPanel = () => {
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState("accessibility");
-  const [selectedModel, setSelectedModel] = useState("model1")
+  // const [selectedAlgorithm, setSelectedAlgorithm] = useState("accessibility");
+  const [selectedModel, setSelectedModel] = useState("model1");
   const [, setLayer] = useRecoilState(layerState);
-  const [isPredictPanelOpen, setIsPredictPanelOpen] = useRecoilState(isPredictPanelOpenState);
+  const [isPredictPanelOpen, setIsPredictPanelOpen] = useRecoilState(
+    isPredictPanelOpenState
+  );
   const [isMainPanelOpen] = useRecoilState(isMainPanelOpenState);
 
   const togglePanel = () => {
@@ -100,7 +99,7 @@ const PredictPanel = () => {
   };
 
   return (
-    <PanelContainer 
+    <PanelContainer
       $isOpen={isPredictPanelOpen}
       $isMainPanelOpen={isMainPanelOpen}
     >
@@ -114,15 +113,14 @@ const PredictPanel = () => {
       </select>
       <hr></hr>
       <InputContainer>
-        {
-          inputs.map(input => 
-            <TextField id={input.id} label={input.label} variant="outlined" />
-          )
-        } 
-        
+        {inputs.map((input) => (
+          <TextField id={input.id} label={input.label} variant="outlined" />
+        ))}
       </InputContainer>
       <Button variant="contained">Predict!</Button>
-      <ToggleButton $isOpen={isPredictPanelOpen} onClick={togglePanel}>{isPredictPanelOpen ? "<" : "Predict Yourself!"}</ToggleButton>
+      <ToggleButton $isOpen={isPredictPanelOpen} onClick={togglePanel}>
+        {isPredictPanelOpen ? "<" : "Predict Yourself!"}
+      </ToggleButton>
     </PanelContainer>
   );
 };
