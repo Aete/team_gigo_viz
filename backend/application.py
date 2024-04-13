@@ -8,7 +8,7 @@ import joblib
 
 # create an app and load the model
 app = Flask(__name__)
-CORS(app, resources={r"/predict": {"origins": ["http://localhost", "https://teamgigo.netlify.app"]}})
+CORS(app, resources={r"/predict": {"origins": ["https://teamgigo.netlify.app"]}})
 
 ## model = joblib.load('model.pkl')
 
