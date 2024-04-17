@@ -16,6 +16,10 @@ const Popover = ({ properties }) => {
   return (
     <PopoverContainer onClick={stopPropagation}>
       <div>
+        <BoldText>One year survival probability:</BoldText>{" "}
+        {Math.round(properties.probability * 100)}%
+      </div>
+      <div>
         <BoldText>Height:</BoldText> {Math.round(properties.height * 100) / 100}
       </div>
       <div>

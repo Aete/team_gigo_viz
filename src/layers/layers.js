@@ -5,10 +5,10 @@ export const probabilityLayer = {
     "fill-color": [
       "interpolate",
       ["linear"],
-      ["get", "distance_from_station(ft)"],
-      0,
+      ["get", "probability"],
+      0.3,
       "#fff",
-      2000,
+      0.6,
       "#2196f3",
     ],
     "fill-opacity": 0.3,

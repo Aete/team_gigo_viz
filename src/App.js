@@ -83,6 +83,7 @@ function App() {
         mapStyle="mapbox://styles/sghan/ck1ljdcmy16fc1cpg0f4qh3wu"
         onClick={handleMapClick}
         interactiveLayerIds={[
+          "probability",
           "Distance to Subway",
           "Riderships_evening",
           "Riderships_midday",
