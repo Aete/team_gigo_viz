@@ -13,8 +13,14 @@ import Popover from "./Popover";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import {
   accessibilityLayer,
-  buildingLayer,
+  probabilityLayer,
   highlightLayer,
+  ridershipLayer,
+  ridershipLayerTwo,
+  estimatedVehicleLayer,
+  food400Layer,
+  food800Layer,
+  parkAccessibilityLayer,
 } from "./layers/layers";
 
 import { useRecoilState } from "recoil";
@@ -76,21 +82,69 @@ function App() {
         mapboxAccessToken={mapboxAccessToken}
         mapStyle="mapbox://styles/sghan/ck1ljdcmy16fc1cpg0f4qh3wu"
         onClick={handleMapClick}
-        interactiveLayerIds={["Distance to Subway", "Height"]}
+        interactiveLayerIds={[
+          "Distance to Subway",
+          "Riderships_evening",
+          "Riderships_midday",
+          "estimatedVehicle",
+          "food400",
+          "food800",
+          "distance_to_park",
+        ]}
         ref={mapRef}
       >
         <Source type="geojson" data={buildingJson}>
           <Layer
-            {...accessibilityLayer}
+            {...probabilityLayer}
             layout={{
               visibility: selectedLayer === "rf" ? "visible" : "none",
             }}
           />
           <Layer
-            {...buildingLayer}
+            {...accessibilityLayer}
             layout={{
               visibility:
                 selectedLayer === "distance_to_subway" ? "visible" : "none",
+            }}
+          />
+          <Layer
+            {...ridershipLayer}
+            layout={{
+              visibility:
+                selectedLayer === "ridership_evening" ? "visible" : "none",
+            }}
+          />
+          <Layer
+            {...ridershipLayerTwo}
+            layout={{
+              visibility:
+                selectedLayer === "ridership_midday" ? "visible" : "none",
+            }}
+          />
+          <Layer
+            {...estimatedVehicleLayer}
+            layout={{
+              visibility:
+                selectedLayer === "estimatedVehicle" ? "visible" : "none",
+            }}
+          />
+          <Layer
+            {...food400Layer}
+            layout={{
+              visibility: selectedLayer === "food400" ? "visible" : "none",
+            }}
+          />
+          <Layer
+            {...food800Layer}
+            layout={{
+              visibility: selectedLayer === "food800" ? "visible" : "none",
+            }}
+          />
+          <Layer
+            {...parkAccessibilityLayer}
+            layout={{
+              visibility:
+                selectedLayer === "distance_to_park" ? "visible" : "none",
             }}
           />
           <Layer {...highlightLayer} filter={filter} />

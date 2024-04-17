@@ -64,10 +64,19 @@ const Panel = () => {
       <H3Title>Layers :</H3Title>
       <select value={selectedAlgorithm} onChange={handleAlgorithmSelect}>
         <option value="rf">(Prediction) One Year Survival Probability</option>
-        <option value="age">(Feature) Building Age</option>
-        <option value="height">(Feature) Building Height</option>
         <option value="distance_to_subway">(Feature) Distance to Subway</option>
-        <option value="distance_to_park">(Feature) Feature1</option>
+        <option value="ridership_evening">
+          (Feature) Subway Riderships in the Evening
+        </option>
+        <option value="ridership_midday">
+          (Feature) Subway Riderships in the Midday
+        </option>
+        <option value="estimatedVehicle">
+          (Feature) Estimated Vehicle Count
+        </option>
+        <option value="food400">(Feature) # of restaurants within 400m</option>
+        <option value="food800">(Feature) # of restaurants within 800m</option>
+        <option value="distance_to_park">(Feature) Distance to park</option>
       </select>
       <Navigation setSubMenu={setSubMenu} subMenu={subMenu} />
       <Overview selectedAlgorithm={selectedAlgorithm} />
