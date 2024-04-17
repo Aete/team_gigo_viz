@@ -18,13 +18,21 @@ const ScatterContainer = styled.div`
 
 const ScatterHeader = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 
   & select {
     height: 20px;
+    margin-left: 10px;
   }
+`;
+
+const ScatterLabel = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
 `;
 
 export default function Scatter() {
@@ -49,7 +57,7 @@ export default function Scatter() {
       )[0];
 
       const { properties } = buildingData;
-      const coordinates = buildingData.geometry.coordinates[0];
+      const coordinates = buildingData.geometry.coordinates[0][0];
       const centroid = calculateCentroid(coordinates);
       setBuilding({ properties, centroid });
     },
@@ -83,18 +91,32 @@ export default function Scatter() {
   return (
     <ScatterContainer $isVisible={subMenu === "scatter"}>
       <ScatterHeader>
-        X:
-        <select value={xFeature} onChange={handleXChange}>
-          <option value="office_area">Office Area</option>
-          <option value="retail_area">Retail Area</option>
-          <option value="residential_area">Residential Area</option>
-        </select>
-        Y:
-        <select value={yFeature} onChange={handleYChange}>
-          <option value="office_area">Office Area</option>
-          <option value="retail_area">Retail Area</option>
-          <option value="residential_area">Residential Area</option>
-        </select>
+        <ScatterLabel>
+          <label>X:</label>
+          <select value={xFeature} onChange={handleXChange}>
+            <option value="office_area">Office Area</option>
+            <option value="retail_area">Retail Area</option>
+            <option value="residential_area">Residential Area</option>
+            <option value="distance_from_station(ft)">
+              Distance to Subway (ft)
+            </option>
+            <option value="food_100"># of Restaurants within 100m</option>
+            <option value="food_400"># of Restaurants within 400m</option>
+          </select>
+        </ScatterLabel>
+        <ScatterLabel>
+          <label>Y:</label>
+          <select value={yFeature} onChange={handleYChange}>
+            <option value="office_area">Office Area</option>
+            <option value="retail_area">Retail Area</option>
+            <option value="residential_area">Residential Area</option>
+            <option value="distance_from_station(ft)">
+              Distance to Subway (ft)
+            </option>
+            <option value="food_100"># of Restaurants within 100m</option>
+            <option value="food_400"># of Restaurants within 400m</option>
+          </select>
+        </ScatterLabel>
       </ScatterHeader>
       <div className="ScatterChart" ref={container}></div>
     </ScatterContainer>
