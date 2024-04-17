@@ -14,7 +14,7 @@ export default function Overview({ selectedAlgorithm }) {
   const [subMenu] = useRecoilState(subMenuState);
   return (
     <ChartsContainer $isVisible={subMenu === "overview"}>
-      <AlgorithmComparisonChart selectedAlgorithm={selectedAlgorithm} />
+      {/* <AlgorithmComparisonChart selectedAlgorithm={selectedAlgorithm} /> */}
       <TopSuccessSpotsList selectedAlgorithm={selectedAlgorithm} />
     </ChartsContainer>
   );

@@ -36,25 +36,23 @@ export default function Scatter() {
 
   const container = useRef(null);
 
-  const setBuildingByBin = useCallback(
-    (bin) => {
-      const previousBin = building?.properties?.bin;
+  const setBuildingByBin = (bin) => {
+    const previousBin = building?.properties?.bin;
 
-      if (previousBin && previousBin.toString() === bin.toString()) {
-        setBuilding(null);
-      }
+    if (previousBin && previousBin.toString() === bin.toString()) {
+      setBuilding(null);
+    }
 
-      const buildingData = buildingJson.features.filter(
-        (row) => parseInt(row.properties.bin) === bin
-      )[0];
+    const buildingData = buildingJson.features.filter(
+      (row) => parseInt(row.properties.bin) === bin
+    )[0];
 
-      const properties = buildingData.properties;
-      const coordinates = buildingData.geometry.coordinates[0][0];
-      const centroid = calculateCentroid(coordinates);
-      setBuilding({ properties, centroid });
-    },
-    [building, setBuilding]
-  );
+    const { properties } = buildingData;
+    const coordinates = buildingData.geometry.coordinates[0];
+    const centroid = calculateCentroid(coordinates);
+    setBuilding({ properties, centroid });
+  };
+
   useEffect(() => {
     if (!chart) {
       setChart(

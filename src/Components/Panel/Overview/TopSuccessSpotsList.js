@@ -78,8 +78,8 @@ const TopSuccessSpotsList = ({ selectedAlgorithm }) => {
       (row) => parseInt(row.properties.bin) === bin
     )[0];
 
-    const properties = buildingData.properties;
-    const coordinates = buildingData.geometry.coordinates[0][0];
+    const { properties } = buildingData;
+    const coordinates = buildingData.geometry.coordinates[0];
     const centroid = calculateCentroid(coordinates);
     setBuilding({ properties, centroid });
   };
