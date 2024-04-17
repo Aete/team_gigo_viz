@@ -33,6 +33,13 @@ const PanelContainer = styled.div`
   }};
 `;
 
+const PlainText = styled.p`
+  margin-top: 13px;
+`;
+
+const PlainTextWithMarginBottom = styled.p`
+  margin-bottom: 10px;
+`;
 const ToggleButton = styled.button`
   position: absolute;
   top: 10px;
@@ -63,11 +70,12 @@ const inputs = [
 
 const InputContainer = styled.div`
   display: flex;
-  margin: 15px 0;
+  margin: 20px 0;
   padding-top: 10px;
   flex-direction: column;
   height: 600px;
   overflow-y: scroll;
+  border-top: 1px solid #aaa;
 
   & .MuiTextField-root {
     margin: 10px 0;
@@ -83,6 +91,7 @@ const PredictPanel = () => {
   const [isMainPanelOpen] = useRecoilState(isMainPanelOpenState);
   const [building] = useRecoilState(buildingState);
   const [inputValues, setInputValues] = useState({});
+  const [prediction, setPrediction] = useState(null);
 
   useEffect(() => {
     if (building === null) {
@@ -90,6 +99,7 @@ const PredictPanel = () => {
     }
     const { properties } = building;
     setInputValues(properties);
+    setPrediction(null);
   }, [building]);
 
   const togglePanel = () => {
@@ -113,6 +123,7 @@ const PredictPanel = () => {
       ...prevInputValues,
       [id]: value,
     }));
+    setPrediction(null);
   };
 
   const predict = () => {
@@ -153,10 +164,10 @@ const PredictPanel = () => {
         params: xData,
       })
       .then((response) => {
-        console.log("Prediction", response.data);
+        setPrediction(response.data.prediction);
       })
       .catch((error) => {
-        console.error("Error fetching prediction", error);
+        alert("Error fetching prediction. Please try again", error);
       });
   };
 
@@ -167,14 +178,16 @@ const PredictPanel = () => {
     >
       <H1TitleWithSubtitle>Predict Yourself</H1TitleWithSubtitle>
       <H1Subtitle>Try our model with your custom input data</H1Subtitle>
-      <H3Title>Model :</H3Title>
-      <select value={selectedModel} onChange={handleModelSelect}>
-        <option value="model1">Random Forest</option>
-        <option value="model2">PCA</option>
-        <option value="model3">Support Vector Machine</option>
-      </select>
-      <hr></hr>
+      <H3Title>Model: Random Forest</H3Title>
+      <PlainText>
+        Probability to 1 year survival:{" "}
+        {prediction !== null ? `${parseInt(prediction * 100)}%` : "-"}
+      </PlainText>
+      <PlainText>Model Accuracy: {57.34}%</PlainText>
       <InputContainer>
+        <PlainTextWithMarginBottom>
+          Please click a building to predict
+        </PlainTextWithMarginBottom>
         {inputs.map((input, i) => (
           <TextField
             key={`input-${i}`}
@@ -189,6 +202,7 @@ const PredictPanel = () => {
       <Button variant="contained" onClick={predict}>
         Predict!
       </Button>
+
       <ToggleButton $isOpen={isPredictPanelOpen} onClick={togglePanel}>
         {isPredictPanelOpen ? "<" : "Predict Yourself!"}
       </ToggleButton>

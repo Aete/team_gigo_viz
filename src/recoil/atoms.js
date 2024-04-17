@@ -7,7 +7,7 @@ export const buildingState = atom({
 
 export const layerState = atom({
   key: "layer",
-  default: "accessibility",
+  default: "rf",
 });
 
 export const subMenuState = atom({

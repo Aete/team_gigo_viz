@@ -1,11 +1,47 @@
 export const accessibilityLayer = {
-  id: "building_accessibility",
+  id: "Distance to Subway",
   type: "fill",
   paint: {
     "fill-color": [
       "interpolate",
       ["linear"],
       ["get", "distance_from_station(ft)"],
+      0,
+      "#fff",
+      300,
+      "#2196f3",
+    ],
+    "fill-opacity": 0.3,
+    "fill-outline-color": "#212121",
+  },
+};
+
+export const height = {
+  id: "Height",
+  type: "fill",
+  paint: {
+    "fill-color": [
+      "interpolate",
+      ["linear"],
+      ["get", "height"],
+      0,
+      "#fff",
+      300,
+      "#2196f3",
+    ],
+    "fill-opacity": 0.3,
+    "fill-outline-color": "#212121",
+  },
+};
+
+export const age = {
+  id: "Age",
+  type: "fill",
+  paint: {
+    "fill-color": [
+      "interpolate",
+      ["linear"],
+      ["get", "age"],
       0,
       "#fff",
       300,

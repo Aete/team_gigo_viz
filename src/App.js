@@ -1,5 +1,5 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import Map, { Popup, Source, Layer } from "react-map-gl";
 
 import styled from "styled-components";
@@ -34,7 +34,7 @@ function App() {
     latitude: 40.746676,
     longitude: -73.9901321,
     zoom: 12,
-    transitionDuration: 1000,
+    transitionDuration: 2000,
   };
   const mapRef = useRef();
   const [building, setBuilding] = useRecoilState(buildingState);
@@ -52,6 +52,17 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    if (building) {
+      mapRef.current.flyTo({
+        center: building.centroid,
+        zoom: 15, // 선택적으로 원하는 줌 레벨로 조정할 수 있습니다.
+        essential: true, // 이동이 필수 요소임을 명시합니다.
+        duration: 1000,
+      });
+    }
+  }, [building]);
+
   const filter = useMemo(
     () => ["in", "bin", building?.properties.bin || ""],
     [building]
@@ -65,21 +76,21 @@ function App() {
         mapboxAccessToken={mapboxAccessToken}
         mapStyle="mapbox://styles/sghan/ck1ljdcmy16fc1cpg0f4qh3wu"
         onClick={handleMapClick}
-        interactiveLayerIds={["building_accessibility", "building_json"]}
+        interactiveLayerIds={["Distance to Subway", "Height"]}
         ref={mapRef}
       >
         <Source type="geojson" data={buildingJson}>
           <Layer
             {...accessibilityLayer}
             layout={{
-              visibility:
-                selectedLayer === "accessibility" ? "visible" : "none",
+              visibility: selectedLayer === "rf" ? "visible" : "none",
             }}
           />
           <Layer
             {...buildingLayer}
             layout={{
-              visibility: selectedLayer === "data1" ? "visible" : "none",
+              visibility:
+                selectedLayer === "distance_to_subway" ? "visible" : "none",
             }}
           />
           <Layer {...highlightLayer} filter={filter} />
@@ -100,7 +111,6 @@ function App() {
       </Map>
       <PredictPanel />
       <Panel />
-
     </MapContainer>
   );
 }

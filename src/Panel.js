@@ -63,9 +63,11 @@ const Panel = () => {
       <H1Title>Traffic-Driven Restaurant Success Prediction</H1Title>
       <H3Title>Layers :</H3Title>
       <select value={selectedAlgorithm} onChange={handleAlgorithmSelect}>
-        <option value="accessibility">(Prediction) Algorithm 1</option>
-        <option value="algorithm2">(Prediction) Algorithm 2</option>
-        <option value="data1">(Data) Feature1</option>
+        <option value="rf">(Prediction) One Year Survival Probability</option>
+        <option value="age">(Feature) Building Age</option>
+        <option value="height">(Feature) Building Height</option>
+        <option value="distance_to_subway">(Feature) Distance to Subway</option>
+        <option value="distance_to_park">(Feature) Feature1</option>
       </select>
       <Navigation setSubMenu={setSubMenu} subMenu={subMenu} />
       <Overview selectedAlgorithm={selectedAlgorithm} />

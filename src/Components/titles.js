@@ -16,8 +16,7 @@ export const H1Subtitle = styled.p`
   font-size: 15px;
   font-weight: bold;
   margin-bottom: 20px;
-`
-
+`;
 
 export const H3Title = styled.h3`
   font-size: 20px;

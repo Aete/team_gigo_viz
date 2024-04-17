@@ -10,6 +10,32 @@ import Paper from "@mui/material/Paper";
 import { useRecoilState } from "recoil";
 import { buildingState, subMenuState } from "../../recoil/atoms";
 
+const keyMapping = {
+  height: "Height",
+  cnstrct_yr: "Construction Year",
+  bin: "Building ID",
+  retail_area: "Retail Area",
+  office_area: "Office Area",
+  residential_area: "Residential Area",
+  idw_aadt_mean: "Estimated Vehicle Count-1",
+  idw_atvc_mean: "Estimated Vehicle Count-2",
+  "distance_from_station(ft)": "Distance to Subway (ft)",
+  ridership_morning: "Riderships at the nearest subway between 6~10AM",
+  ridership_midday: "Riderships at the nearest subway between 10AM~4PM",
+  ridership_evening: "Riderships at the nearest subway between 4~8PM",
+  ridership_night: "Riderships at the nearest subway between 8~12PM",
+  ridership_late_night: "Riderships at the nearest subway between 0~6AM",
+  office_within_450ft: "Office area within 450ft",
+  retail_within_450ft: "Retail area within 450ft",
+  residential_within_450ft: "Residential area within 450ft",
+  distance_to_park: "Distance to Park",
+  distance_to_school: "Distance to School",
+  food_100: "# of restaurants within 100m",
+  food_400: "# of restaurants within 400m",
+  food_800: "# of restaurants within 800m",
+  food_1000: "# of restaurants within 1000m",
+};
+
 const TableContainerDiv = styled.div`
   width: 100%;
   display: flex;
@@ -68,7 +94,7 @@ export default function TableBox() {
                     component="th"
                     scope="row"
                   >
-                    {row.key}
+                    {keyMapping[row.key] || row.key}
                   </TableCell>
                   <TableCell align="right">{row.value}</TableCell>
                 </TableRow>
