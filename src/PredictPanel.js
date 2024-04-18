@@ -73,7 +73,7 @@ const InputContainer = styled.div`
   margin: 20px 0;
   padding-top: 10px;
   flex-direction: column;
-  height: 600px;
+  height: 500px;
   overflow-y: scroll;
   border-top: 1px solid #aaa;
 
