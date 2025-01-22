@@ -160,7 +160,7 @@ const PredictPanel = () => {
     };
     axios.defaults.withCredentials = true;
     axios
-      .get("https://teamgigo-dbd388857a8d.herokuapp.com/predict", {
+      .get("https://portfolio-temp-8b84be96adba.herokuapp.com/predict", {
         params: xData,
       })
       .then((response) => {
