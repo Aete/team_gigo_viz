@@ -15,7 +15,7 @@ const PanelContainer = styled.div`
   top: 40px;
   left: 0;
   width: 400px;
-  height: calc(99.5% - 50px);
+  height: calc(100vh - 50px);
   background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -76,7 +76,7 @@ const InputContainer = styled.div`
   margin: 20px 0;
   padding-top: 10px;
   flex-direction: column;
-  height: 500px;
+  height: calc(100vh - 320px);
   overflow-y: scroll;
   border-top: 1px solid #aaa;
 
