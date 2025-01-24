@@ -1,6 +1,5 @@
 import * as d3 from "d3";
 import csvData from "../../../utils/data/building.csv";
-import buildingJson from "../../../utils/data/building.json";
 
 export function ScatterPlot(element, bin, handleBinSelect) {
   const margin = { top: 50, bottom: 50, right: 50, left: 50 };

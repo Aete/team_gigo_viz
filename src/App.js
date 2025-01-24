@@ -1,5 +1,5 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useMemo, useRef, useEffect } from "react";
+import { useMemo, useRef, useEffect, useState } from "react";
 import Map, { Popup, Source, Layer } from "react-map-gl";
 
 import styled from "styled-components";
@@ -25,11 +25,27 @@ import {
 
 import { useRecoilState } from "recoil";
 import { buildingState, layerState } from "./recoil/atoms";
+import Modal from "./Components/Modal";
 
 const MapContainer = styled.div`
   position: relative;
   width: 99.5vw;
   height: 99.5vh;
+`;
+
+const InfoBtn = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #fff;
+  color: #212121;
+  border: 1px solid #212121;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
 `;
 
 const mapboxAccessToken =
@@ -45,6 +61,10 @@ function App() {
   const mapRef = useRef();
   const [building, setBuilding] = useRecoilState(buildingState);
   const [selectedLayer] = useRecoilState(layerState);
+  const [showModal, setShowModal] = useState(true);
+  const handleModal = (e) => {
+    setShowModal(!showModal);
+  };
 
   const handleMapClick = (e) => {
     const features = e.features;
@@ -166,6 +186,8 @@ function App() {
       </Map>
       <PredictPanel />
       <Panel />
+      {showModal && <Modal handleModal={handleModal} />}
+      {!showModal && <InfoBtn onClick={handleModal}>?</InfoBtn>}
     </MapContainer>
   );
 }

@@ -7,7 +7,6 @@ import { useRecoilState } from "recoil";
 import {
   isMainPanelOpenState,
   isPredictPanelOpenState,
-  layerState,
   buildingState,
 } from "./recoil/atoms";
 
@@ -83,8 +82,6 @@ const InputContainer = styled.div`
 `;
 
 const PredictPanel = () => {
-  const [selectedModel, setSelectedModel] = useState("model1");
-  const [, setLayer] = useRecoilState(layerState);
   const [isPredictPanelOpen, setIsPredictPanelOpen] = useRecoilState(
     isPredictPanelOpenState
   );
@@ -104,17 +101,6 @@ const PredictPanel = () => {
 
   const togglePanel = () => {
     setIsPredictPanelOpen(!isPredictPanelOpen);
-  };
-
-  const handleModelSelect = (e) => {
-    const selectedValue = e.target.value;
-    setSelectedModel(selectedValue);
-    handleSelect(e);
-  };
-
-  const handleSelect = (e) => {
-    e.preventDefault();
-    setLayer(e.target.value);
   };
 
   const handleInputChange = (e) => {
