@@ -3,8 +3,10 @@ import csvData from "../../../utils/data/building.csv";
 
 export function ScatterPlot(element, bin, handleBinSelect) {
   const margin = { top: 50, bottom: 50, right: 50, left: 50 };
-  const height = 400 - margin.top - margin.bottom;
-  const width = 400 - margin.left - margin.right;
+  const height =
+    (window.innerWidth > 500 ? 400 : 350) - margin.top - margin.bottom;
+  const width =
+    (window.innerWidth > 500 ? 400 : 350) - margin.left - margin.right;
 
   let data;
   const svg = d3

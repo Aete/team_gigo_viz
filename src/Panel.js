@@ -7,14 +7,19 @@ import { Navigation } from "./Components/Panel/Navigation";
 import Table from "./Components/Panel/Table";
 import Scatter from "./Components/Panel/Scatter/Scatter";
 import { useRecoilState } from "recoil";
-import { isMainPanelOpenState, layerState, subMenuState } from "./recoil/atoms";
+import {
+  isMainPanelOpenState,
+  layerState,
+  subMenuState,
+  isPredictPanelOpenState,
+} from "./recoil/atoms";
 
 const PanelContainer = styled.div`
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 0;
+  left: 0;
   width: 400px;
-  height: calc(99.5% - 10px);
+  height: 100vh;
   background-color: rgba(255, 255, 255, 1);
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -22,6 +27,10 @@ const PanelContainer = styled.div`
   transition: transform 0.3s ease-in-out;
   transform: ${({ $isOpen }) =>
     $isOpen ? "translateX(0)" : "translateX(-100%)"};
+
+  @media screen and (max-width: 768px) {
+    width: calc(100vw - 30px);
+  }
 `;
 
 const ToggleButton = styled.button`
@@ -41,9 +50,14 @@ const Panel = () => {
   const [subMenu, setSubMenu] = useRecoilState(subMenuState);
   const [isMainPanelOpen, setIsMainPanelOpen] =
     useRecoilState(isMainPanelOpenState);
-  // const [,setIsPredictPanelOpen] = useRecoilState(isPredictPanelOpenState);
+  const [isPredictPanelOpen, setIsPredictPanelOpen] = useRecoilState(
+    isPredictPanelOpenState
+  );
 
   const togglePanel = () => {
+    if (window.innerWidth < 768 && isPredictPanelOpen) {
+      setIsPredictPanelOpen(false);
+    }
     setIsMainPanelOpen(!isMainPanelOpen);
   };
 

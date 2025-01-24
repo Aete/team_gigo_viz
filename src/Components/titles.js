@@ -4,12 +4,19 @@ export const H1Title = styled.h1`
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 25px;
+  }
 `;
 
 export const H1TitleWithSubtitle = styled.h1`
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 5px;
+  @media screen and (max-width: 768px) {
+    font-size: 25px;
+  }
 `;
 
 export const H1Subtitle = styled.p`
@@ -22,6 +29,10 @@ export const H3Title = styled.h3`
   font-size: 20px;
   font-weight: semi-bold;
   margin-bottom: 10px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 export const H4Title = styled.h3`

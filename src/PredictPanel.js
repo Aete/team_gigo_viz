@@ -12,8 +12,8 @@ import {
 
 const PanelContainer = styled.div`
   position: absolute;
-  top: 50px;
-  left: 10px;
+  top: 40px;
+  left: 0;
   width: 400px;
   height: calc(99.5% - 50px);
   background-color: rgba(255, 255, 255, 0.9);
@@ -30,6 +30,10 @@ const PanelContainer = styled.div`
       else return "translateX(-100%)";
     }
   }};
+
+  @media screen and (max-width: 768px) {
+    width: calc(100vw - 30px);
+  }
 `;
 
 const PlainText = styled.p`
@@ -42,8 +46,8 @@ const PlainTextWithMarginBottom = styled.p`
 const ToggleButton = styled.button`
   position: absolute;
   top: 10px;
-  right: ${({ $isOpen }) => ($isOpen ? "-30px" : "-100px")};
-  width: ${({ $isOpen }) => ($isOpen ? "30px" : "100px")};
+  right: ${({ $isOpen }) => ($isOpen ? "-30px" : "-50px")};
+  width: ${({ $isOpen }) => ($isOpen ? "30px" : "50px")};
   height: 30px;
   background-color: #fab1a0;
   border: none;
@@ -85,7 +89,8 @@ const PredictPanel = () => {
   const [isPredictPanelOpen, setIsPredictPanelOpen] = useRecoilState(
     isPredictPanelOpenState
   );
-  const [isMainPanelOpen] = useRecoilState(isMainPanelOpenState);
+  const [isMainPanelOpen, setIsMainPanelOpen] =
+    useRecoilState(isMainPanelOpenState);
   const [building] = useRecoilState(buildingState);
   const [inputValues, setInputValues] = useState({});
   const [prediction, setPrediction] = useState(null);
@@ -101,6 +106,9 @@ const PredictPanel = () => {
 
   const togglePanel = () => {
     setIsPredictPanelOpen(!isPredictPanelOpen);
+    if (window.innerWidth <= 768 && isMainPanelOpen) {
+      setIsMainPanelOpen(false);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -190,7 +198,7 @@ const PredictPanel = () => {
       </Button>
 
       <ToggleButton $isOpen={isPredictPanelOpen} onClick={togglePanel}>
-        {isPredictPanelOpen ? "<" : "Predict Yourself!"}
+        {isPredictPanelOpen ? "<" : "Predict"}
       </ToggleButton>
     </PanelContainer>
   );
